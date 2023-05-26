@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using GestionTerrestreMaritima.Model.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Unitest.CommonArrage.DB.Data;
 
 namespace GestionTerrestreMaritima.Dalc.Context
 {
@@ -22,6 +23,7 @@ namespace GestionTerrestreMaritima.Dalc.Context
         public virtual DbSet<Envio> Envios { get; set; } = null!;
         public virtual DbSet<Parametro> Parametros { get; set; } = null!;
         public virtual DbSet<Producto> Productos { get; set; } = null!;
+        public virtual DbSet<ParametroTest> ParametroTest { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

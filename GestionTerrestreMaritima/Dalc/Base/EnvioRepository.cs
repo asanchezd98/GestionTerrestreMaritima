@@ -19,8 +19,15 @@ namespace GestionTerrestreMaritima.Dalc.Base
 
         public void addEntrega(Envio entregamaritima)
         {
-            _context.Envios.Add(entregamaritima);
-            _context.SaveChangesAsync();
+            try
+            {
+                _context.Envios.Add(entregamaritima);
+                _context.SaveChanges();
+            }catch (Exception ex)
+            {
+
+            }
+            
         }
     }
 }

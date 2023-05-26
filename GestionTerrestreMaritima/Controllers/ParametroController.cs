@@ -43,13 +43,13 @@ namespace GestionTerrestreMaritima.Controllers
             {
                 var token = Request.Headers["Authorization"].ToString();
                 if (!new Utiles.Utiles(_context).ValidarToken(token))
-                    return StatusCode((int)HttpStatusCode.Unauthorized, new ResponseMensajeError { Mensaje = "ERROR: Token invalido.", code = (int)HttpStatusCode.Unauthorized });
+                    return StatusCode((int)HttpStatusCode.Unauthorized, new ResponseMensajeError { mensaje = "ERROR: Token invalido.", code = (int)HttpStatusCode.Unauthorized });
 
                 reponse = await _repository.ObtenerParametrosxfiltro(parametro, idFilial);
             }
             catch (Exception ex)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, new ResponseMensajeError { Mensaje = $"ERROR: {ex.Message}.", code = (int)HttpStatusCode.InternalServerError });
+                return StatusCode((int)HttpStatusCode.InternalServerError, new ResponseMensajeError { mensaje = $"ERROR: {ex.Message}.", code = (int)HttpStatusCode.InternalServerError });
             }
             return Ok(reponse);
         }
@@ -71,13 +71,13 @@ namespace GestionTerrestreMaritima.Controllers
             {
                 var token = Request.Headers["Authorization"].ToString();
                 if (!new Utiles.Utiles(_context).ValidarToken(token))
-                    return StatusCode((int)HttpStatusCode.Unauthorized, new ResponseMensajeError { Mensaje = "ERROR: Token invalido.", code = (int)HttpStatusCode.Unauthorized });
+                    return StatusCode((int)HttpStatusCode.Unauthorized, new ResponseMensajeError { mensaje = "ERROR: Token invalido.", code = (int)HttpStatusCode.Unauthorized });
 
                 reponse = await _repository.ObtenerParametrosxNombre(parametro);
             }
             catch (Exception ex)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, new ResponseMensajeError { Mensaje = $"ERROR: {ex.Message}.", code = (int)HttpStatusCode.InternalServerError });
+                return StatusCode((int)HttpStatusCode.InternalServerError, new ResponseMensajeError { mensaje = $"ERROR: {ex.Message}.", code = (int)HttpStatusCode.InternalServerError });
             }
             return Ok(reponse);
         }

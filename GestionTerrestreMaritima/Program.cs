@@ -1,4 +1,3 @@
-using GestionTerrestreMaritima.BO.RepositoryBO;
 using GestionTerrestreMaritima.Dalc.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -22,6 +21,10 @@ builder.Services.AddSwaggerGen(c =>
 
 //Se obtiene el valor de la conexion de la base de datos establecida en el appsettings y se construye la linea de código para realizar la inyección de dependencia del contexto de la DB
 builder.Services.AddDbContext<GESTIONENVIOTMContext>(options => options.UseSqlServer(builder.Configuration["ConnectionStrings:connection"]));
+builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
+{
+    builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+}));
 
 var app = builder.Build();
 
@@ -40,5 +43,9 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors("corsapp");
+
+app.UseRouting();
 
 app.Run();

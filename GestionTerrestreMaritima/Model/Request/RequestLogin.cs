@@ -3,6 +3,6 @@
     public class RequestLogin
     {
         public string Usuario { get; set; }
-        public string Paswword { get; set; }
+        public string Password { get; set; }
     }
 }

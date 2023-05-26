@@ -8,7 +8,7 @@
         /// <summary>
         /// Mensaje de error
         /// </summary>
-        public string Mensaje { get; set; } 
+        public string mensaje { get; set; } 
         public int code { get; set; }
     }
 }

@@ -20,8 +20,13 @@ namespace GestionTerrestreMaritima.Dalc.Base
 
         public void AddCLiente(Cliente cliente)
         {
-            _context.Clientes.Add(cliente);
-            _context.SaveChangesAsync();
+            try
+            {
+                _context.Clientes.Add(cliente);
+                _context.SaveChanges();
+            }catch (Exception ex) { }
+
+            
         }
 
         public int Login(string usuario, string password)

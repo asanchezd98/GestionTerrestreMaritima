@@ -20,38 +20,53 @@ namespace GestionTerrestreMaritima.BO.RepositoryBO
 
         public async Task<List<ResponseCliente>> ObtenerClientes()
         {
-            var response = new List<ResponseCliente>();
-            var data = await _clienteRepository.ObtenerClientes();
-            foreach (var item in data)
+            try
             {
-                response.Add(new ResponseCliente
+                var response = new List<ResponseCliente>();
+                var data = await _clienteRepository.ObtenerClientes();
+                foreach (var item in data)
                 {
-                    Documento = item.Documento,
-                    Id = item.Id,
-                    Nombre = item.Nombre,
-                    Telefono = item.Telefono,
-                    Usuario = item.Usuario
-                });
+                    response.Add(new ResponseCliente
+                    {
+                        Documento = item.Documento,
+                        Id = item.Id,
+                        Nombre = item.Nombre,
+                        Telefono = item.Telefono,
+                        Usuario = item.Usuario
+                    });
+                }
+                return response;
+            }catch  (Exception ex)
+            {
+                return new List<ResponseCliente>();
             }
-            return response;
+            
         }
 
-        public void AddCLiente(RequestCliente request)
+        public bool AddCLiente(RequestCliente request)
         {
-            var cliente = new Cliente
+            try
             {
-                Nombre = request.Nombre,
-                Documento = request.Documento,
-                Telefono = request.Telefono,
-                Usuario = request.Usuario,
-                Password = new Utiles.Utiles(_context).EncryptSHA256(request.Password)
-            };
-            _clienteRepository.AddCLiente(cliente);
+                var cliente = new Cliente
+                {
+                    Nombre = request.nombre,
+                    Documento = request.documento,
+                    Telefono = request.telefono,
+                    Usuario = request.usuario,
+                    Password = new Utiles.Utiles(_context).EncryptSHA256(request.password)
+                };
+                _clienteRepository.AddCLiente(cliente);
+                return true;
+            }catch (Exception ex)
+            {
+                return false;
+            }
+           
         }
 
         public int Login(RequestLogin request)
         {
-            return _clienteRepository.Login(request.Usuario, request.Paswword);
+            return _clienteRepository.Login(request.Usuario, request.Password);
         }
     }
 }

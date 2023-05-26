@@ -43,13 +43,13 @@ namespace GestionTerrestreMaritima.Controllers
             {
                 var token = Request.Headers["Authorization"].ToString();
                 if (!new Utiles.Utiles(_context).ValidarToken(token))
-                    return StatusCode((int)HttpStatusCode.Unauthorized, new ResponseMensajeError { Mensaje = "ERROR: Token invalido.", code = (int)HttpStatusCode.Unauthorized });
+                    return StatusCode((int)HttpStatusCode.Unauthorized, new ResponseMensajeError { mensaje = "ERROR: Token invalido.", code = (int)HttpStatusCode.Unauthorized });
 
                 reponse = await _repository.ObtenerClientes();
             }
             catch (Exception ex)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, new ResponseMensajeError  { Mensaje = $"ERROR: {ex.Message}.", code = (int)HttpStatusCode.InternalServerError });
+                return StatusCode((int)HttpStatusCode.InternalServerError, new ResponseMensajeError  { mensaje = $"ERROR: {ex.Message}.", code = (int)HttpStatusCode.InternalServerError });
             }
             return Ok(reponse);
         }
@@ -71,22 +71,22 @@ namespace GestionTerrestreMaritima.Controllers
             {
                 var token = Request.Headers["Authorization"].ToString();
                 if (!new Utiles.Utiles(_context).ValidarToken(token))
-                    return StatusCode((int)HttpStatusCode.Unauthorized, new ResponseMensajeError { Mensaje = "ERROR: Token invalido.", code = (int)HttpStatusCode.Unauthorized });
+                    return StatusCode((int)HttpStatusCode.Unauthorized, new ResponseMensajeError { mensaje = "ERROR: Token invalido.", code = (int)HttpStatusCode.Unauthorized });
                 
                 if (request == null)
-                    return StatusCode((int)HttpStatusCode.BadRequest, new ResponseMensajeError { Mensaje = "ERROR: La petición no puede estar vacia.", code = (int)HttpStatusCode.BadRequest });
+                    return StatusCode((int)HttpStatusCode.BadRequest, new ResponseMensajeError { mensaje = "ERROR: La petición no puede estar vacia.", code = (int)HttpStatusCode.BadRequest });
 
                 if (!ModelState.IsValid)
-                    return StatusCode((int)HttpStatusCode.UnprocessableEntity, new ResponseMensajeError { Mensaje = "ERROR: Contrato del modelo invalido. " + string.Join(" | ", ModelState.Values.SelectMany(v => v.Errors)
+                    return StatusCode((int)HttpStatusCode.UnprocessableEntity, new ResponseMensajeError { mensaje = "ERROR: Contrato del modelo invalido. " + string.Join(" | ", ModelState.Values.SelectMany(v => v.Errors)
         .               Select(e => e.ErrorMessage)), code = (int)HttpStatusCode.UnprocessableEntity });
                 
                 _repository.AddCLiente(request);
             }
             catch (Exception ex)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, new ResponseMensajeError { Mensaje = $"ERROR: {ex.Message}.", code = (int)HttpStatusCode.InternalServerError });
+                return StatusCode((int)HttpStatusCode.InternalServerError, new ResponseMensajeError { mensaje = $"ERROR: {ex.Message}.", code = (int)HttpStatusCode.InternalServerError });
             }
-            return Ok("Operacion Realizada con exicto!");
+            return Ok(new { mensaje = "Operacion Realizada con exicto!", code = 200});
         }
 
         /// <summary>
@@ -107,27 +107,27 @@ namespace GestionTerrestreMaritima.Controllers
             {
                 var token = Request.Headers["Authorization"].ToString();
                 if (!new Utiles.Utiles(_context).ValidarToken(token))
-                    return StatusCode((int)HttpStatusCode.Unauthorized, new ResponseMensajeError { Mensaje = "ERROR: Token invalido.", code = (int)HttpStatusCode.Unauthorized });
+                    return StatusCode((int)HttpStatusCode.Unauthorized, new ResponseMensajeError { mensaje = "ERROR: Token invalido.", code = (int)HttpStatusCode.Unauthorized });
 
                 if (request == null)
-                    return StatusCode((int)HttpStatusCode.BadRequest, new ResponseMensajeError { Mensaje = "ERROR: La petición no puede estar vacia.", code = (int)HttpStatusCode.BadRequest });
+                    return StatusCode((int)HttpStatusCode.BadRequest, new ResponseMensajeError { mensaje = "ERROR: La petición no puede estar vacia.", code = (int)HttpStatusCode.BadRequest });
 
                 if (!ModelState.IsValid)
                     return StatusCode((int)HttpStatusCode.UnprocessableEntity, new ResponseMensajeError
                     {
-                        Mensaje = "ERROR: Contrato del modelo invalido. " + string.Join(" | ", ModelState.Values.SelectMany(v => v.Errors)
+                        mensaje = "ERROR: Contrato del modelo invalido. " + string.Join(" | ", ModelState.Values.SelectMany(v => v.Errors)
                         .Select(e => e.ErrorMessage)),
                         code = (int)HttpStatusCode.UnprocessableEntity
                     });
 
                 idCliente = _repository.Login(request);
                 if (idCliente == 0)
-                    return StatusCode((int)HttpStatusCode.BadRequest, new ResponseMensajeError { Mensaje = "ERROR: Usuario o contraseña incorrecta.!", code = (int)HttpStatusCode.BadRequest });
+                    return StatusCode((int)HttpStatusCode.BadRequest, new ResponseMensajeError { mensaje = "ERROR: Usuario o contraseña incorrecta.!", code = (int)HttpStatusCode.BadRequest });
 
             }
             catch (Exception ex)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, new ResponseMensajeError { Mensaje = $"ERROR: {ex.Message}.", code = (int)HttpStatusCode.InternalServerError });
+                return StatusCode((int)HttpStatusCode.InternalServerError, new ResponseMensajeError { mensaje = $"ERROR: {ex.Message}.", code = (int)HttpStatusCode.InternalServerError });
             }
             return Ok(new ResponseMensajeLogin { Mensaje = "Operacion Realizada con exicto!",  IdCliente = idCliente });
         }

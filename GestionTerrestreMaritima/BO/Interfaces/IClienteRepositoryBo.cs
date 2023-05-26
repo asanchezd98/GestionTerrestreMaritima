@@ -7,7 +7,7 @@ namespace GestionTerrestreMaritima.BO.Interfaces
     public interface IClienteRepositoryBo
     {
         Task<List<ResponseCliente>> ObtenerClientes();
-        void AddCLiente(RequestCliente request);
+        bool AddCLiente(RequestCliente request);
         int Login(RequestLogin request);
     }
 }

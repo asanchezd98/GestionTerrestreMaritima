@@ -7,6 +7,6 @@ namespace GestionTerrestreMaritima.BO.Interfaces
     public interface IEnvioRepositoryBo
     {
         Task<List<ResponseEnvio>> ObtenerEnvios();
-        void addEnvio(RequestEnvio request);
+        bool addEnvio(RequestEnvio request);
     }
 }

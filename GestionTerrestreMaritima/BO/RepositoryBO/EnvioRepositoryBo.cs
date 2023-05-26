@@ -17,6 +17,7 @@ namespace GestionTerrestreMaritima.BO.RepositoryBO
         private readonly ParametroRepositoryBo _parametroRepositoryBo;
         public EnvioRepositoryBo(GESTIONENVIOTMContext context)
         {
+            _context = context;
             _envioRepository = new EnvioRepository(context);
             _clienteRepositoryBo = new ClienteRepositoryBo(context);
             _productosRepositoryBo = new ProductosRepositoryBo(context);
@@ -51,23 +52,35 @@ namespace GestionTerrestreMaritima.BO.RepositoryBO
             return response;
         }
 
-        public void addEnvio(RequestEnvio request)
+        public bool addEnvio(RequestEnvio request)
         {
-            var envio = new Envio
+            try
             {
-                Idcliente = request.Idcliente,
-                Idtipoproducto = request.Idtipoproducto,
-                Cantproducto = request.Cantproducto,
-                Fecharegistro = DateTime.Now,
-                Fechaentrega = request.Fechaentrega,
-                Idbodega = request.Idbodega,
-                Precioenvio = request.Precioenvio,
-                Descuento = request.Cantproducto > 10 ? (int)(request.Precioenvio - (request.Precioenvio * 0.03)) : 0,
-                Filial = _parametroRepositoryBo.ObtenerParametrosxfiltro("FILIAL", request.Filial).Result.FirstOrDefault().Valorparametro,
-                Numtransporte = new Utiles.Utiles(_context).generarNiVehiculo(request.Filial),
-                Numguia = new Utiles.Utiles(_context).GenerarCadenaAlfanumerica()
-            };
-            _envioRepository.addEntrega(envio);
+                var a = _parametroRepositoryBo.ObtenerParametrosxfiltro("FILIAL", request.Filial).Result.FirstOrDefault().Valorparametro;
+                var s = new Utiles.Utiles(_context).generarNiVehiculo(request.Filial);
+                var Numguia = new Utiles.Utiles(_context).GenerarCadenaAlfanumerica();
+                var envio = new Envio
+                {
+                    Idcliente = request.Idcliente,
+                    Idtipoproducto = request.Idtipoproducto,
+                    Cantproducto = request.Cantproducto,
+                    Fecharegistro = DateTime.Now,
+                    Fechaentrega = request.Fechaentrega,
+                    Idbodega = request.Idbodega,
+                    Precioenvio = request.Precioenvio,
+                    Descuento = request.Cantproducto > 10 ? (int)(request.Precioenvio - (request.Precioenvio * 0.03)) : 0,
+                    Filial = _parametroRepositoryBo.ObtenerParametrosxfiltro("FILIAL", request.Filial).Result.FirstOrDefault().Valorparametro,
+                    Numtransporte = new Utiles.Utiles(_context).generarNiVehiculo(request.Filial),
+                    Numguia = new Utiles.Utiles(_context).GenerarCadenaAlfanumerica()
+                };
+                _envioRepository.addEntrega(envio);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            
         }
     }
 }
